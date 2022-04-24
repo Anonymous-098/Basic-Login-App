@@ -34,6 +34,11 @@
   border-color: #4f005f;
 }
 
+.control.invalid input {
+  border-color: red;
+  background: #fbdada;
+}
+
 .actions{
   text-align: center;
 }
