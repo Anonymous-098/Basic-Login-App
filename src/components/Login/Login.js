@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import Card from "../UI/Card/Card";
 import Button from "../UI/Button/Button";
@@ -10,20 +10,33 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  useEffect(() => {
+    const identifier = setTimeout(()=>{
+      console.log("Checking form!!");
+      setFormIsValid(
+        enteredEmail.includes("@") && enteredPassword.trim().length > 6
+      );
+    },500);
+
+    return ()=>{
+      console.log("CLEANUP");
+      clearTimeout(identifier);
+    }
+
+  }, [enteredEmail,enteredPassword]);
+
   const enteredEmailHandler = (e) => {
     setEnteredEmail(e.target.value);
-
-    setFormIsValid(
-      e.target.value.includes("@") && enteredPassword.trim().length > 6
-    );
+    // setFormIsValid(
+    //   e.target.value.includes("@") && enteredPassword.trim().length > 6
+    // );
   };
 
   const enteredPasswordHandler = (e) => {
     setEnteredPassword(e.target.value);
-
-    setFormIsValid(
-      e.target.value.trim().length > 6 && enteredEmail.includes("@")
-    );
+    // setFormIsValid(
+    //   enteredEmail.includes("@") && e.target.value.trim().length > 6
+    // );
   };
 
   const validateEmail = () => {
@@ -42,7 +55,7 @@ const Login = (props) => {
   return (
     <Card className="login">
       <form onSubmit={submitHandler}>
-        <div className={`control ${emailIsValid === false? 'invalid':''}`}>
+        <div className={`control ${emailIsValid === false ? "invalid" : ""}`}>
           <label>E-Mail</label>
           <input
             type="text"
@@ -51,7 +64,9 @@ const Login = (props) => {
             onBlur={validateEmail}
           ></input>
         </div>
-        <div className={`control ${passwordIsValid === false? 'invalid':''}`}>
+        <div
+          className={`control ${passwordIsValid === false ? "invalid" : ""}`}
+        >
           <label>Password</label>
           <input
             type="password"

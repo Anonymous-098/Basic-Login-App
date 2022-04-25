@@ -1,20 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Login from "./components/Login/Login";
 import MainHeader from "./components/MainHeader/MainHeader";
-import Home from './components/Home/Home';
+import Home from "./components/Home/Home";
 
 const App = () => {
+  const [isLoggedin, setIsLoggedin] = useState(false);
 
-  const [isLoggedin,setIsLoggedin] = useState(false);
+  useEffect(() => {
+    const userLoggedInInformation = localStorage.getItem("isLoggedIn");
 
-  const loginClickHandler = () =>{
+    if (userLoggedInInformation === "1") {
+      setIsLoggedin(true);
+    }
+  }, []);
+
+  const loginClickHandler = () => {
+    localStorage.setItem("isLoggedIn", "1");
     setIsLoggedin(true);
-  }
+  };
 
-  const logOutHandler = () =>{
+  const logOutHandler = () => {
+    localStorage.setItem("isLoggedIn", "0");
     setIsLoggedin(false);
-  }
-  
+  };
+
   return (
     <>
       <MainHeader isLoggedin={isLoggedin} logOutHandler={logOutHandler} />
