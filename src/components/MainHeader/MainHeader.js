@@ -7,7 +7,7 @@ const MainHeader = (props) =>{
         <>
             <header className="header">
                 <h1>A Typical Page</h1>
-                <Navigation isLoggedin={props.isLoggedin} logOutHandler={props.logOutHandler} />
+                <Navigation logOutHandler={props.logOutHandler} />
             </header>
         </>
     )
